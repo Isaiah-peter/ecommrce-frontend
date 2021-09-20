@@ -25,17 +25,52 @@ export const sliderItems = [
 export const categories = [
   {
     id: 1,
-    img: "https://image.pexels.com/photos//pexels-photo-.jpg",
+    img: "https://images.pexels.com/photos/5886041/pexels-photo-5886041.jpeg",
     title: "Shirt shirt",
   },
   {
     id: 2,
-    img: "https://image.pexels.com/photos//pexels-photo-.jpg",
+    img: "https://images.pexels.com/photos/2983464/pexels-photo-2983464.jpeg",
     title: "loungewear love",
   },
   {
     id: 3,
-    img: "https://image.pexels.com/photos//pexels-photo-.jpg",
+    img: "https://images.pexels.com/photos/5480696/pexels-photo-5480696.jpeg",
     title: "light jackets",
+  },
+];
+
+export const popularProduct = [
+  {
+    id: 1,
+    img: "https://images.pexels.com/photos/7009589/pexels-photo-7009589.jpeg",
+  },
+  {
+    id: 2,
+    img: "https://images.pexels.com/photos/9574669/pexels-photo-9574669.jpeg",
+  },
+  {
+    id: 3,
+    img: "https://images.pexels.com/photos/9558752/pexels-photo-9558752.jpeg",
+  },
+  {
+    id: 4,
+    img: "https://images.pexels.com/photos/9558929/pexels-photo-9558929.jpeg",
+  },
+  {
+    id: 5,
+    img: "https://images.pexels.com/photos/6626903/pexels-photo-6626903.jpeg",
+  },
+  {
+    id: 6,
+    img: "https://images.pexels.com/photos/1043474/pexels-photo-1043474.jpeg",
+  },
+  {
+    id: 7,
+    img: "https://images.pexels.com/photos/7388267/pexels-photo-7388267.jpeg",
+  },
+  {
+    id: 8,
+    img: "https://images.pexels.com/photos/7388265/pexels-photo-7388265.jpeg",
   },
 ];
