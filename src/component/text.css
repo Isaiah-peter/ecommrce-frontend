@@ -1,5 +1,7 @@
 text {
- margin-bottom: 20px;
- display: flex;
- align-items: center;
+padding: 15px;
+border: 1px solid teal;
+background-color: #fff;
+cursor: pointer;
+border-radius: 10%;
 }
