@@ -1,7 +1,3 @@
 text {
-padding: 15px;
-border: 1px solid teal;
-background-color: #fff;
-cursor: pointer;
-border-radius: 10%;
+   position: relative;
 }
