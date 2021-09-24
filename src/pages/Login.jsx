@@ -36,15 +36,15 @@ const Form = styled.form`
   display: flex;
   flex-wrap: wrap;
   position: relative;
+  flex-direction: column;
 `;
 const Input = styled.input`
   flex: 1;
-  max-width: 42%;
   margin-bottom: 10px;
   padding: 10px;
   border: 1px solid gray;
   border-radius: 5px;
-  font-size: 14px;
+  font-size: 17px;
 `;
 
 const Button = styled.button`
@@ -59,7 +59,7 @@ const Button = styled.button`
 const Icon = styled.div`
   position: absolute;
   right: 4%;
-  top: 10%;
+  top: 40%;
 `;
 
 const Login = () => {
@@ -69,17 +69,13 @@ const Login = () => {
       <Wrapper>
         <Title>Signin to you account </Title>
         <Form>
-          <Input
-            style={{ marginRight: "10px" }}
-            placeholder="email"
-            type="email"
-          />
+          <Input placeholder="email" type="email" />
           <Input
             placeholder="password"
-            type={showPassword == false ? "password" : "text"}
+            type={showPassword === false ? "password" : "text"}
           />
           <Icon onClick={() => setShowPassword(!showPassword)}>
-            {showPassword ? <RemoveRedEyeOutlined /> : <VisibilityOff />}
+            {showPassword ? <VisibilityOff /> : <RemoveRedEyeOutlined />}
           </Icon>
           <Button>Login</Button>
           <Button
