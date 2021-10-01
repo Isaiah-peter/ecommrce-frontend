@@ -28,7 +28,7 @@ const Description = styled.p`
 
 const SocialMediaContainer = styled.div`
   display: flex;
-  align-item: center;
+  align-items: center;
 `;
 const SocialIcon = styled.div`
   width: 40px;

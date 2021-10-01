@@ -110,11 +110,39 @@ const Hr = styled.hr`
   background-color: #eee;
   border: none;
   height: 1px;
+  margin: 20px;
 `;
 
 const Summary = styled.div`
-  flex: 1;
-  background-color: red;
+  flex: 0.9;
+  border: 0.5px solid lightgray;
+  border-radius: 10px;
+  padding: 20px;
+  height: 50vh;
+`;
+
+const SummaryTitle = styled.h1`
+  font-weight: 100;
+  text-transform: uppercase;
+`;
+const SummaryItem = styled.div`
+  margin: 30px 0;
+  display: flex;
+  justify-content: space-between;
+  font-size: ${(props) => props.typed === "total" && "24px"};
+  font-weight: ${(props) => props.typed === "total" && "500"};
+`;
+const SummaryItemText = styled.span``;
+const SummaryItemPrice = styled.span``;
+const Button = styled.button`
+  width: 100%;
+  background-color: black;
+  color: white;
+  font-weight: 600;
+  padding: 10px;
+  font-size: 16px;
+  text-transform: uppercase;
+  cursor: pointer;
 `;
 
 const Cart = () => {
@@ -180,7 +208,22 @@ const Cart = () => {
               </PriceDetail>
             </Product>
           </Info>
-          <Summary>summary</Summary>
+          <Summary>
+            <SummaryTitle>Order summary</SummaryTitle>
+            <SummaryItem>
+              <SummaryItemText>SubTotal</SummaryItemText>
+              <SummaryItemPrice>$ 80</SummaryItemPrice>
+            </SummaryItem>
+            <SummaryItem>
+              <SummaryItemText>Estimated Shipping</SummaryItemText>
+              <SummaryItemPrice>$ 5.90</SummaryItemPrice>
+            </SummaryItem>
+            <SummaryItem typed="total">
+              <SummaryItemText>Total</SummaryItemText>
+              <SummaryItemPrice>$ 85.90</SummaryItemPrice>
+            </SummaryItem>
+            <Button>Checkout</Button>
+          </Summary>
         </Bottom>
       </Wrapper>
       <Footer />

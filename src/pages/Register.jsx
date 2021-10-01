@@ -57,12 +57,13 @@ const Button = styled.button`
   color: white;
   margin-top: 10px;
   font-size: 16px;
+  cursor: pointer;
 `;
 
 const Icon = styled.div`
   position: absolute;
   right: 2%;
-  top: 30%;
+  top: 28%;
 `;
 
 const Register = () => {
@@ -71,11 +72,22 @@ const Register = () => {
     <Container>
       <Wrapper>
         <Title>Create an Account </Title>
+        <Button
+          style={{
+            position: "absolute",
+            top: "10px",
+            right: "10px",
+            background: "#A3E5AE",
+            width: "16%",
+          }}
+        >
+          Login
+        </Button>
         <Form>
           <Input placeholder="username" />
           <Input
             placeholder="password"
-            type={showPassword == false ? "text" : "password"}
+            type={showPassword === false ? "text" : "password"}
           />
           <Icon onClick={() => setShowPassword(!showPassword)}>
             {showPassword ? <RemoveRedEyeOutlined /> : <VisibilityOff />}
@@ -86,16 +98,6 @@ const Register = () => {
             <b>Private Policy</b>
           </Agreement>
           <Button>Create</Button>
-          <Button
-            style={{
-              position: "absolute",
-              bottom: "0",
-              right: "10px",
-              background: "#A3E5AE",
-            }}
-          >
-            Login
-          </Button>
         </Form>
       </Wrapper>
     </Container>

@@ -54,6 +54,7 @@ const Button = styled.button`
   background-color: teal;
   color: white;
   margin-top: 10px;
+  cursor: pointer;
 `;
 
 const Icon = styled.div`
@@ -67,6 +68,17 @@ const Login = () => {
   return (
     <Container>
       <Wrapper>
+        <Button
+          style={{
+            position: "absolute",
+            top: "10px",
+            right: "10px",
+            background: "#A3E5AE",
+            width: "16%",
+          }}
+        >
+          Create a new account
+        </Button>
         <Title>Signin to you account </Title>
         <Form>
           <Input placeholder="email" type="email" />
@@ -78,16 +90,6 @@ const Login = () => {
             {showPassword ? <VisibilityOff /> : <RemoveRedEyeOutlined />}
           </Icon>
           <Button>Login</Button>
-          <Button
-            style={{
-              position: "absolute",
-              bottom: "0",
-              right: "10px",
-              background: "#A3E5AE",
-            }}
-          >
-            Create a new account
-          </Button>
         </Form>
       </Wrapper>
     </Container>
