@@ -1,10 +1,12 @@
 import { Add, Remove } from "@material-ui/icons";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router";
 import styled from "styled-components";
 import Announcement from "../component/Announcement";
 import Footer from "../component/Footer";
 import Navbar from "../component/Navbar";
 import NewLetter from "../component/NewLetter";
+import { publicRequest } from "../requestMethod";
 
 const Container = styled.div``;
 const Wrapper = styled.div`
@@ -110,50 +112,69 @@ const Button = styled.button`
 `;
 
 const Product = () => {
+  const [product, setProduct] = useState([]);
+  const loc = useParams();
+  const id = loc.id;
+  console.log(id);
+
+  useEffect(() => {
+    const getProduct = async () => {
+      try {
+        const res = await publicRequest.get(`/product/${id}`);
+        setProduct(res.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getProduct();
+  }, [id]);
+
+  console.log(product);
+
   return (
     <Container>
       <Navbar />
       <Announcement />
-      <Wrapper>
-        <ImageContainer>
-          <Image src="https://i.ibb.co/S6qMxwr/jean.png" />
-        </ImageContainer>
-        <InfoContainer>
-          <Title>Jean JumpSuit</Title>
-          <Desc>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum aut
-            minus, velit ut quas ea maxime aliquid fugiat rerum fugit illum?
-            Alias minus vitae in necessitatibus voluptates vel nostrum quod.
-          </Desc>
-          <Price>$ 20</Price>
-          <FilterContainer>
-            <Filter>
-              <FilterTitle>Color</FilterTitle>
-              <FilterColor color="black" />
-              <FilterColor color="darkblue" />
-              <FilterColor color="gray" />
-            </Filter>
-            <Filter>
-              <FilterTitle>Size</FilterTitle>
-              <FilterSize>
-                <FilterSizeOption>XS</FilterSizeOption>
-                <FilterSizeOption>S</FilterSizeOption>
-                <FilterSizeOption>M</FilterSizeOption>
-                <FilterSizeOption>L</FilterSizeOption>
-                <FilterSizeOption>XL</FilterSizeOption>
-              </FilterSize>
-            </Filter>
-          </FilterContainer>
-          <AddContainer>
-            <AmountContainer>
-              <Remove style={{ cursor: "pointer" }} />
-              <Amount>1</Amount>
-              <Add style={{ cursor: "pointer" }} />
-            </AmountContainer>
-            <Button>Add to cart</Button>
-          </AddContainer>
-        </InfoContainer>
-      </Wrapper>
+      {product.length !== 0 && (
+        <Wrapper>
+          <ImageContainer>
+            <Image src={product.image_url} />
+          </ImageContainer>
+          <InfoContainer>
+            <Title>{product.title}</Title>
+            <Desc>{product.description}</Desc>
+            <Price>$ {product.price}</Price>
+            <FilterContainer>
+              {product.length !== 0 && (
+                <Filter>
+                  <FilterTitle>Color</FilterTitle>
+                  {product.Color.map((c) => (
+                    <FilterColor color={c.name} />
+                  ))}
+                </Filter>
+              )}
+              <Filter>
+                <FilterTitle>Size</FilterTitle>
+                {product.length !== 0 && (
+                  <FilterSize>
+                    {product.Size.map((s) => (
+                      <FilterSizeOption>{s.name}</FilterSizeOption>
+                    ))}
+                  </FilterSize>
+                )}
+              </Filter>
+            </FilterContainer>
+            <AddContainer>
+              <AmountContainer>
+                <Remove style={{ cursor: "pointer" }} />
+                <Amount>1</Amount>
+                <Add style={{ cursor: "pointer" }} />
+              </AmountContainer>
+              <Button>Add to cart</Button>
+            </AddContainer>
+          </InfoContainer>
+        </Wrapper>
+      )}
       <NewLetter />
       <Footer />
     </Container>

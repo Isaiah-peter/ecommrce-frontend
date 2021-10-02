@@ -11,6 +11,7 @@ const Container = styled.div``;
 
 const Title = styled.h1`
   margin: 20px;
+  text-transform: capitalize;
 `;
 
 const FilterContainer = styled.div`
@@ -43,6 +44,7 @@ const ProductList = () => {
   const handleFilter = (e) => {
     const value = e.target.value;
     setFilter({
+      ...filter,
       [e.target.name]: value,
     });
   };
@@ -51,18 +53,18 @@ const ProductList = () => {
     <Container>
       <Navbar />
       <Announcement />
-      <Title>Dresses</Title>
+      <Title>{cat}</Title>
       <FilterContainer>
         <Filter>
           <FilterText>Filter Product:</FilterText>
           <Select name="color" onChange={handleFilter}>
             <Option disabled>Color</Option>
-            <Option>White</Option>
-            <Option>Black</Option>
-            <Option>Red</Option>
-            <Option>Blue</Option>
-            <Option>Green</Option>
-            <Option>Yellow</Option>
+            <Option>white</Option>
+            <Option>black</Option>
+            <Option>red</Option>
+            <Option>blue</Option>
+            <Option>green</Option>
+            <Option>yellow</Option>
           </Select>
           <Select name="size" onChange={handleFilter}>
             <Option disabled>Size</Option>
