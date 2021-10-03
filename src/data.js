@@ -41,6 +41,12 @@ export const categories = [
     title: "light jackets",
     cat: "man",
   },
+  {
+    id: 4,
+    img: "https://images.pexels.com/photos/9676481/pexels-photo-9676481.jpeg",
+    title: "kid zone",
+    cat: "kid",
+  },
 ];
 
 export const popularProduct = [

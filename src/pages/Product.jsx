@@ -112,10 +112,12 @@ const Button = styled.button`
 `;
 
 const Product = () => {
-  const [product, setProduct] = useState([]);
   const loc = useParams();
   const id = loc.id;
-  console.log(id);
+  const [product, setProduct] = useState([]);
+  const [quantity, setQuantity] = useState(1);
+  const [color, setColor] = useState("");
+  const [size, setSize] = useState("");
 
   useEffect(() => {
     const getProduct = async () => {
@@ -129,7 +131,19 @@ const Product = () => {
     getProduct();
   }, [id]);
 
-  console.log(product);
+  const handleCart = () => {
+    
+  }
+
+  const handleQuantity = (condition) => {
+    if (condition === "desc") {
+      quantity > 1 && setQuantity(quantity - 1);
+    } else {
+      setQuantity(quantity + 1);
+    }
+  };
+
+  console.log(size, color);
 
   return (
     <Container>
@@ -148,16 +162,19 @@ const Product = () => {
               {product.length !== 0 && (
                 <Filter>
                   <FilterTitle>Color</FilterTitle>
-                  {product.Color.map((c) => (
-                    <FilterColor color={c.name} />
+                  {product.Color?.map((c) => (
+                    <FilterColor
+                      color={c.name}
+                      onClick={() => setColor(c.name)}
+                    />
                   ))}
                 </Filter>
               )}
               <Filter>
                 <FilterTitle>Size</FilterTitle>
                 {product.length !== 0 && (
-                  <FilterSize>
-                    {product.Size.map((s) => (
+                  <FilterSize onChange={(e) => setSize(e.target.value)}>
+                    {product.Size?.map((s) => (
                       <FilterSizeOption>{s.name}</FilterSizeOption>
                     ))}
                   </FilterSize>
@@ -166,11 +183,17 @@ const Product = () => {
             </FilterContainer>
             <AddContainer>
               <AmountContainer>
-                <Remove style={{ cursor: "pointer" }} />
-                <Amount>1</Amount>
-                <Add style={{ cursor: "pointer" }} />
+                <Remove
+                  style={{ cursor: "pointer" }}
+                  onClick={() => handleQuantity("desc")}
+                />
+                <Amount>{quantity}</Amount>
+                <Add
+                  style={{ cursor: "pointer" }}
+                  onClick={() => handleQuantity("asc")}
+                />
               </AmountContainer>
-              <Button>Add to cart</Button>
+              <Button onClick={handleCart} >Add to cart</Button>
             </AddContainer>
           </InfoContainer>
         </Wrapper>
