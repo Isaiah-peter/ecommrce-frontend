@@ -1,7 +1,7 @@
 export const sliderItems = [
   {
     id: 1,
-    img: "https://i.ibb.co/XsdmR2c/1.png",
+    img: "https://i.ibb.co/DG69bQ4/2.png",
     title: "summer sale",
     desc: "DON'T COMPROMISE ON STYLE! GET FLAT 30% ON NEW ARRIVALS.",
     bg: "f5fafd",
@@ -27,16 +27,25 @@ export const categories = [
     id: 1,
     img: "https://images.pexels.com/photos/5886041/pexels-photo-5886041.jpeg",
     title: "Shirt shirt",
+    cat: "woman",
   },
   {
     id: 2,
     img: "https://images.pexels.com/photos/2983464/pexels-photo-2983464.jpeg",
     title: "loungewear love",
+    cat: "tshirt",
   },
   {
     id: 3,
     img: "https://images.pexels.com/photos/5480696/pexels-photo-5480696.jpeg",
     title: "light jackets",
+    cat: "man",
+  },
+  {
+    id: 4,
+    img: "https://images.pexels.com/photos/9676481/pexels-photo-9676481.jpeg",
+    title: "kid zone",
+    cat: "kid",
   },
 ];
 
