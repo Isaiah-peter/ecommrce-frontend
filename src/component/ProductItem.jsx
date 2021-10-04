@@ -76,7 +76,7 @@ const ProductItem = ({ item }) => {
         <Icon>
           <ShoppingCartOutlined />
         </Icon>
-        <Link to={`/product/${item.ID}`}>
+        <Link to={`/product/${item.ID}`} style={{ color: "inherit" }}>
           <Icon>
             <SearchOutlined />
           </Icon>

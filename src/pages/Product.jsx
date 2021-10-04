@@ -7,6 +7,8 @@ import Footer from "../component/Footer";
 import Navbar from "../component/Navbar";
 import NewLetter from "../component/NewLetter";
 import { publicRequest } from "../requestMethod";
+import { addProduct } from "../redux/cartRedux";
+import { useDispatch } from "react-redux";
 
 const Container = styled.div``;
 const Wrapper = styled.div`
@@ -118,6 +120,7 @@ const Product = () => {
   const [quantity, setQuantity] = useState(1);
   const [color, setColor] = useState("");
   const [size, setSize] = useState("");
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const getProduct = async () => {
@@ -132,8 +135,8 @@ const Product = () => {
   }, [id]);
 
   const handleCart = () => {
-    
-  }
+    dispatch(addProduct({ ...product, quantity, color, size }));
+  };
 
   const handleQuantity = (condition) => {
     if (condition === "desc") {
@@ -193,7 +196,7 @@ const Product = () => {
                   onClick={() => handleQuantity("asc")}
                 />
               </AmountContainer>
-              <Button onClick={handleCart} >Add to cart</Button>
+              <Button onClick={handleCart}>Add to cart</Button>
             </AddContainer>
           </InfoContainer>
         </Wrapper>
