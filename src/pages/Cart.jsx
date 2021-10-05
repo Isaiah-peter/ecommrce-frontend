@@ -1,9 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import Navbar from "../component/Navbar";
 import Announcement from "../component/Announcement";
 import Footer from "../component/Footer";
 import { Add, Remove } from "@material-ui/icons";
+import { useSelector } from "react-redux";
+import { PaystackConsumer } from "react-paystack";
+
+const KEY = process.env.REACT_APP_PAYSTACK;
 
 const Container = styled.div``;
 const Wrapper = styled.div`
@@ -62,6 +66,8 @@ const ProductDetail = styled.div`
 
 const Image = styled.img`
   width: 200px;
+  height: 200px;
+  object-fit: cover;
 `;
 
 const Detail = styled.div`
@@ -146,6 +152,33 @@ const Button = styled.button`
 `;
 
 const Cart = () => {
+  const cart = useSelector((state) => state.cart);
+  const config = {
+    reference: new Date().getTime().toString(),
+    email: "peterisaiah4fun@gmail.com",
+    amount: cart.totalPrice * 100,
+    publicKey: "pk_test_14dbe4a8ca5ec84921b4025d5f0baf5ec63594ae",
+  };
+
+  // you can call this function anything
+  const handleSuccess = (reference) => {
+    // Implementation for whatever you want to do with reference and after success call.
+    console.log(reference);
+  };
+
+  // you can call this function anything
+  const handleClose = () => {
+    // implementation for  whatever you want to do when the Paystack dialog closed.
+    console.log("closed");
+  };
+
+  const componentProps = {
+    ...config,
+    text: "Paystack Button Implementation",
+    onSuccess: (reference) => handleSuccess(reference),
+    onClose: handleClose,
+  };
+
   return (
     <Container>
       <Navbar />
@@ -162,67 +195,57 @@ const Cart = () => {
         </Top>
         <Bottom>
           <Info>
-            <Product>
-              <ProductDetail>
-                <Image src="https://i.ibb.co/DG69bQ4/2.png" />
-                <Detail>
-                  <ProductName>
-                    <b>Product:</b> Jessie thunder shoe
-                  </ProductName>
-                  <ProductColor color="red" />
-                  <ProductSize>
-                    <b>Product Size:</b> 23
-                  </ProductSize>
-                </Detail>
-              </ProductDetail>
-              <PriceDetail>
-                <ProductAmountContainer>
-                  <Remove />
-                  <ProductAmount>2</ProductAmount>
-                  <Add />
-                </ProductAmountContainer>
-                <ProductPrice>$ 30</ProductPrice>
-              </PriceDetail>
-            </Product>
-            <Hr />
-            <Product>
-              <ProductDetail>
-                <Image src="https://i.pinimg.com/564x/0e/52/00/0e5200806d4741d5c9c457344a90eb42.jpg" />
-                <Detail>
-                  <ProductName>
-                    <b>Product:</b> Jessie thunder shoe
-                  </ProductName>
-                  <ProductColor color="black" />
-                  <ProductSize>
-                    <b>Product Size:</b> 23
-                  </ProductSize>
-                </Detail>
-              </ProductDetail>
-              <PriceDetail>
-                <ProductAmountContainer>
-                  <Remove />
-                  <ProductAmount>2</ProductAmount>
-                  <Add />
-                </ProductAmountContainer>
-                <ProductPrice>$ 30</ProductPrice>
-              </PriceDetail>
-            </Product>
+            {cart.products.map((p) => (
+              <>
+                <Product>
+                  <ProductDetail>
+                    <Image src={p.image_url} />
+                    <Detail>
+                      <ProductName>
+                        <b>Product:</b> {p.title}
+                      </ProductName>
+                      <ProductColor color={p.color} />
+                      <ProductSize>
+                        <b>Product Size:</b> {p.size}
+                      </ProductSize>
+                    </Detail>
+                  </ProductDetail>
+                  <PriceDetail>
+                    <ProductAmountContainer>
+                      <Remove />
+                      <ProductAmount>{p.quantity}</ProductAmount>
+                      <Add />
+                    </ProductAmountContainer>
+                    <ProductPrice>$ {p.price * p.quantity}</ProductPrice>
+                  </PriceDetail>
+                </Product>
+                <Hr />
+              </>
+            ))}
           </Info>
           <Summary>
             <SummaryTitle>Order summary</SummaryTitle>
             <SummaryItem>
               <SummaryItemText>SubTotal</SummaryItemText>
-              <SummaryItemPrice>$ 80</SummaryItemPrice>
+              <SummaryItemPrice>$ {cart.totalPrice}</SummaryItemPrice>
             </SummaryItem>
             <SummaryItem>
               <SummaryItemText>Estimated Shipping</SummaryItemText>
-              <SummaryItemPrice>$ 5.90</SummaryItemPrice>
+              <SummaryItemPrice>$ 0</SummaryItemPrice>
             </SummaryItem>
             <SummaryItem typed="total">
               <SummaryItemText>Total</SummaryItemText>
-              <SummaryItemPrice>$ 85.90</SummaryItemPrice>
+              <SummaryItemPrice>$ {cart.totalPrice}</SummaryItemPrice>
             </SummaryItem>
-            <Button>Checkout</Button>
+            <PaystackConsumer {...componentProps}>
+              {({ initializePayment }) => (
+                <Button
+                  onClick={() => initializePayment(handleSuccess, handleClose)}
+                >
+                  Checkout
+                </Button>
+              )}
+            </PaystackConsumer>
           </Summary>
         </Bottom>
       </Wrapper>
