@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import Navbar from "../component/Navbar";
 import Announcement from "../component/Announcement";
 import Footer from "../component/Footer";
 import { Add, Remove } from "@material-ui/icons";
 import { useSelector } from "react-redux";
+import { PaystackConsumer } from "react-paystack";
+
+const KEY = process.env.REACT_APP_PAYSTACK;
 
 const Container = styled.div``;
 const Wrapper = styled.div`
@@ -150,6 +153,32 @@ const Button = styled.button`
 
 const Cart = () => {
   const cart = useSelector((state) => state.cart);
+  const config = {
+    reference: new Date().getTime().toString(),
+    email: "peterisaiah4fun@gmail.com",
+    amount: cart.totalPrice * 100,
+    publicKey: "pk_test_14dbe4a8ca5ec84921b4025d5f0baf5ec63594ae",
+  };
+
+  // you can call this function anything
+  const handleSuccess = (reference) => {
+    // Implementation for whatever you want to do with reference and after success call.
+    console.log(reference);
+  };
+
+  // you can call this function anything
+  const handleClose = () => {
+    // implementation for  whatever you want to do when the Paystack dialog closed.
+    console.log("closed");
+  };
+
+  const componentProps = {
+    ...config,
+    text: "Paystack Button Implementation",
+    onSuccess: (reference) => handleSuccess(reference),
+    onClose: handleClose,
+  };
+
   return (
     <Container>
       <Navbar />
@@ -208,7 +237,15 @@ const Cart = () => {
               <SummaryItemText>Total</SummaryItemText>
               <SummaryItemPrice>$ {cart.totalPrice}</SummaryItemPrice>
             </SummaryItem>
-            <Button>Checkout</Button>
+            <PaystackConsumer {...componentProps}>
+              {({ initializePayment }) => (
+                <Button
+                  onClick={() => initializePayment(handleSuccess, handleClose)}
+                >
+                  Checkout
+                </Button>
+              )}
+            </PaystackConsumer>
           </Summary>
         </Bottom>
       </Wrapper>

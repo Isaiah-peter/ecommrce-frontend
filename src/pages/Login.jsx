@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { RemoveRedEyeOutlined, VisibilityOff } from "@material-ui/icons";
+import { login } from "../redux/aipCall";
+import { useDispatch, useSelector } from "react-redux";
 
 const Container = styled.div`
   width: 100vw;
@@ -55,6 +57,10 @@ const Button = styled.button`
   color: white;
   margin-top: 10px;
   cursor: pointer;
+  &:disabled {
+    color: green;
+    cursor: not-allowed;
+  }
 `;
 
 const Icon = styled.div`
@@ -63,8 +69,23 @@ const Icon = styled.div`
   top: 40%;
 `;
 
+const Error = styled.span`
+  color: red;
+  font-size: 12px;
+`;
+
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
+  const { isFetching, currentUser } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+
+  const handleClick = (e) => {
+    e.preventDefault();
+    login(dispatch, { email, password });
+  };
+
   return (
     <Container>
       <Wrapper>
@@ -81,15 +102,25 @@ const Login = () => {
         </Button>
         <Title>Signin to you account </Title>
         <Form>
-          <Input placeholder="email" type="email" />
+          <Input
+            placeholder="email"
+            onChange={(e) => setEmail(e.target.value)}
+            type="email"
+          />
           <Input
             placeholder="password"
+            onChange={(e) => setPassword(e.target.value)}
             type={showPassword === false ? "password" : "text"}
           />
           <Icon onClick={() => setShowPassword(!showPassword)}>
             {showPassword ? <VisibilityOff /> : <RemoveRedEyeOutlined />}
           </Icon>
-          <Button>Login</Button>
+          <Button onClick={handleClick} disabled={isFetching}>
+            Login
+          </Button>
+          {currentUser !== null && currentUser.status === false && (
+            <Error>{currentUser.message}</Error>
+          )}
         </Form>
       </Wrapper>
     </Container>

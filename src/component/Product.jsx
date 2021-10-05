@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import ProductItem from "./ProductItem";
-import { publicRequest } from "../requestMethod";
-
+import axios from "axios";
+import setToken from "../requestMethod";
+import { useSelector } from "react-redux";
 const Container = styled.div`
   display: flex;
   padding: 20px;
@@ -14,11 +15,20 @@ const Product = ({ cat, filter, sort }) => {
   const [products, setProducts] = useState([]);
   const [filterProducts, setFilterProducts] = useState([]);
 
+  const { token } = useSelector((state) => state.user.currentUser);
+
   useEffect(() => {
     const getProduct = async () => {
       try {
-        const res = await publicRequest.get(
-          cat ? `/product?categories=${cat}` : `/product`
+        const res = await axios.get(
+          cat
+            ? `http://Localhost:5000/product?categories=${cat}`
+            : `http://Localhost:5000/product`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
         );
         setProducts(res.data);
       } catch (error) {

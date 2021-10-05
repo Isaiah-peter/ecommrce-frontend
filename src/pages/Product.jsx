@@ -6,9 +6,9 @@ import Announcement from "../component/Announcement";
 import Footer from "../component/Footer";
 import Navbar from "../component/Navbar";
 import NewLetter from "../component/NewLetter";
-import { publicRequest } from "../requestMethod";
 import { addProduct } from "../redux/cartRedux";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
 
 const Container = styled.div``;
 const Wrapper = styled.div`
@@ -122,10 +122,16 @@ const Product = () => {
   const [size, setSize] = useState("");
   const dispatch = useDispatch();
 
+  const { token } = useSelector((state) => state.user.currentUser);
+
   useEffect(() => {
     const getProduct = async () => {
       try {
-        const res = await publicRequest.get(`/product/${id}`);
+        const res = await axios.get(`http://Localhost:5000/product/${id}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
         setProduct(res.data);
       } catch (error) {
         console.log(error);
