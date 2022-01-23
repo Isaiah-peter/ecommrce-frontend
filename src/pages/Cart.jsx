@@ -157,7 +157,7 @@ const Cart = () => {
     reference: new Date().getTime().toString(),
     email: "peterisaiah4fun@gmail.com",
     amount: cart.totalPrice * 100,
-    publicKey: "pk_test_14dbe4a8ca5ec84921b4025d5f0baf5ec63594ae",
+    publicKey: KEY,
   };
 
   // you can call this function anything
